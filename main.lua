@@ -8,7 +8,7 @@ player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
 
-function love.load()
+function newGame()
 	-- initialize players
 	for i = 1, 4 do
 		player[i] = {}
@@ -21,9 +21,13 @@ function love.load()
 		end
 	end
 
+	board.grid = board.createBoard()
+end
+
+function love.load()
 	intro.load()
 	board.load()
-	board.grid = board.createBoard()
+	newGame()
 end
 
 function love.update(dt)
@@ -41,7 +45,7 @@ end
 
 function love.keypressed(key)
 	if key == "escape" then
-		love.event.push("quit")
+		game.state = "intro"
 	end
 end
 

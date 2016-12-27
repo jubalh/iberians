@@ -99,6 +99,7 @@ end
 --
 
 startmenuClicked["new"] = function()
+	newGame()
 	game.state = "game"
 end
 
