@@ -131,8 +131,6 @@ function board.drawBar()
 	local icon_x = x + 80
 	local icon_y = y - 10
 	local icon_distance = 50
-	love.graphics.draw(icon_img["wool"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["wool"]:getWidth() + icon_distance
 	love.graphics.draw(icon_img["brick"], icon_x, icon_y)
 	icon_x = icon_x + icon_img["brick"]:getWidth() + icon_distance
 	love.graphics.draw(icon_img["iron"], icon_x, icon_y)
@@ -141,10 +139,13 @@ function board.drawBar()
 	icon_x = icon_x + icon_img["wheat"]:getWidth() + icon_distance
 	love.graphics.draw(icon_img["wood"], icon_x, icon_y)
 	icon_x = icon_x + icon_img["wood"]:getWidth() + icon_distance
+	love.graphics.draw(icon_img["wool"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["wool"]:getWidth() + icon_distance
 	--[[
-	for i, v in ipairs(icon_img) do
-		love.graphics.draw(v, icon_x , y + 5)
-		icon_x = icon_x + v:getWidth() + 10
+	-- like this the order would be undefined
+	for i, v in pairs(icon_img) do
+		love.graphics.draw(v, icon_x , icon_y)
+		icon_x = icon_x + v:getWidth() + icon_distance
 	end
 	--]]
 end
