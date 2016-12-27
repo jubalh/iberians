@@ -1,10 +1,11 @@
 intro = {}
-startmenu = {}
 
 local sun_img
 local heading_font
 
+startmenu = {}
 local items_list = { "new", "exit" }
+local startmenuClicked = {}
 
 function intro.load()
 	sun_img = love.graphics.newImage("assets/images/sun.png")
@@ -20,7 +21,7 @@ function addMenu(menu, item, x, y, w, h)
 	menu[item].x = x
 	menu[item].y = y
 	menu[item].w = w
-	menu[item].w = h
+	menu[item].h = h
 	love.graphics.rectangle("line", x, y, w, h)
 
 	return h
@@ -78,4 +79,29 @@ function intro.draw()
 	end
 
 	love.graphics.setColor(255, 255, 255)
+end
+
+function intro.mousepressed(x, y, button)
+	-- when normal click
+	if button == 1 then
+		-- go through all the items
+		for _, v in ipairs(items_list) do
+			-- see if it is inside the dimension of this item
+			if x >= startmenu[v].x and x <= (startmenu[v].x + startmenu[v].w) and y >= startmenu[v].y and y <= (startmenu[v].y + startmenu[v].h) then
+				startmenuClicked[v]()
+			end
+		end
+	end
+end
+
+--
+-- create a clicked function for every items_list entry
+--
+
+startmenuClicked["new"] = function()
+	game.state = "game"
+end
+
+startmenuClicked["exit"] = function()
+	love.event.push("quit")
 end
