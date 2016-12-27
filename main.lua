@@ -3,7 +3,7 @@ require("intro")
 
 debug = false
 game = {}
-game.state = "game"
+game.state = "intro"
 player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
