@@ -4,5 +4,5 @@ function love.conf(t)
 	t.window.title = "Iberians"
 	t.window.width = 1048 * scale
 	t.window.height = 768 * scale
-	t.window.resizable = true
+	t.window.resizable = false
 end

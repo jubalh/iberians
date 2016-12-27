@@ -128,19 +128,24 @@ function board.drawBar()
 	love.graphics.rectangle("fill", x, y, width, height)
 	love.graphics.setColor(255,255,255)
 
-	local icon_x = x + 80
+	-- where to draw the icon
+	local icon_x = x + 100
 	local icon_y = y - 10
-	local icon_distance = 50
-	love.graphics.draw(icon_img["brick"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["brick"]:getWidth() + icon_distance
-	love.graphics.draw(icon_img["iron"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["iron"]:getWidth() + icon_distance
-	love.graphics.draw(icon_img["wheat"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["wheat"]:getWidth() + icon_distance
-	love.graphics.draw(icon_img["wood"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["wood"]:getWidth() + icon_distance
-	love.graphics.draw(icon_img["wool"], icon_x, icon_y)
-	icon_x = icon_x + icon_img["wool"]:getWidth() + icon_distance
+	local text_y = icon_y + 20
+	-- space after an icon (before text)
+	local icon_distance = 10
+	-- space after text
+	local text_distance = 50
+
+	-- going through resource list
+	for k, v in ipairs(resource_list) do
+		-- draw icon and calculate new x
+		love.graphics.draw(icon_img[v], icon_x, icon_y)
+		icon_x = icon_x + icon_img[v]:getWidth() + icon_distance
+		-- draw text (nr of resources) and calculate new x
+		love.graphics.print(game.stats.player.resource[v], icon_x, text_y)
+		icon_x = icon_x + love.graphics.newFont():getWidth(game.stats.player.resource[v]) + text_distance
+	end
 	--[[
 	-- like this the order would be undefined
 	for i, v in pairs(icon_img) do
