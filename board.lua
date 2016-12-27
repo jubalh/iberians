@@ -65,23 +65,17 @@ end
 
 function board.load()
 	-- resources
-	tile_img["brick"] = love.graphics.newImage("assets/images/tiles/brick.png")
-	tile_img["iron"] = love.graphics.newImage("assets/images/tiles/iron.png")
-	tile_img["wheat"] = love.graphics.newImage("assets/images/tiles/wheat.png")
-	tile_img["wood"] = love.graphics.newImage("assets/images/tiles/wood.png")
-	tile_img["wool"] = love.graphics.newImage("assets/images/tiles/wool.png")
-	-- empty
+	for _, v in ipairs(resource_list) do
+		tile_img[v] = love.graphics.newImage("assets/images/tiles/"..v..".png")
+		icon_img[v] = love.graphics.newImage("assets/images/icons/"..v..".png")
+	end
+	-- other tiles
 	tile_img["desert"] = love.graphics.newImage("assets/images/tiles/desert.png")
 	tile_img["water"] = love.graphics.newImage("assets/images/tiles/water.png")
 
+	-- all tiles have the same size
 	tile_width = tile_img["brick"]:getWidth()
 	tile_height = tile_img["brick"]:getHeight()
-
-	icon_img["brick"] = love.graphics.newImage("assets/images/icons/brick.png")
-	icon_img["iron"] = love.graphics.newImage("assets/images/icons/iron.png")
-	icon_img["wheat"] = love.graphics.newImage("assets/images/icons/wheat.png")
-	icon_img["wood"] = love.graphics.newImage("assets/images/icons/wood.png")
-	icon_img["wool"] = love.graphics.newImage("assets/images/icons/wool.png")
 end
 
 function board.draw(x, y)
@@ -146,11 +140,4 @@ function board.drawBar()
 		love.graphics.print(game.stats.player.resource[v], icon_x, text_y)
 		icon_x = icon_x + love.graphics.newFont():getWidth(game.stats.player.resource[v]) + text_distance
 	end
-	--[[
-	-- like this the order would be undefined
-	for i, v in pairs(icon_img) do
-		love.graphics.draw(v, icon_x , icon_y)
-		icon_x = icon_x + v:getWidth() + icon_distance
-	end
-	--]]
 end
