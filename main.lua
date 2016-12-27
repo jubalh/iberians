@@ -1,6 +1,9 @@
 require("board")
+require("intro")
 
 debug = false
+game = {}
+game.state = "game"
 player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
@@ -18,6 +21,7 @@ function love.load()
 		end
 	end
 
+	intro.load()
 	board.load()
 	board.grid = board.createBoard()
 end
@@ -26,9 +30,13 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.setBackgroundColor(51, 102, 204)
-	board.draw(162, 30)
-	board.drawBar()
+	if game.state == "intro" then
+		intro.draw()
+	elseif game.state == "game" then
+		love.graphics.setBackgroundColor(51, 102, 204)
+		board.draw(162, 30)
+		board.drawBar()
+	end
 end
 
 function love.keypressed(key)
