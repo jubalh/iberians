@@ -1,17 +1,21 @@
 require("board")
 
 debug = false
-game = {}
-game.stats = {}
-game.stats.player = {}
-game.stats.player.resource = {}
+player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
 
 function love.load()
-	-- initialize players resources
-	for k, v in ipairs(resource_list) do
-		game.stats.player.resource[v] = 100
+	-- initialize players
+	for i = 1, 4 do
+		player[i] = {}
+		player[i].name = "Player"..i
+		player[i].resource = {}
+
+		-- initialize players resources
+		for k, v in ipairs(resource_list) do
+			player[i].resource[v] = 100
+		end
 	end
 
 	board.load()

@@ -137,7 +137,7 @@ function board.drawBar()
 		love.graphics.draw(icon_img[v], icon_x, icon_y)
 		icon_x = icon_x + icon_img[v]:getWidth() + icon_distance
 		-- draw text (nr of resources) and calculate new x
-		love.graphics.print(game.stats.player.resource[v], icon_x, text_y)
-		icon_x = icon_x + love.graphics.newFont():getWidth(game.stats.player.resource[v]) + text_distance
+		love.graphics.print(player[1].resource[v], icon_x, text_y)
+		icon_x = icon_x + love.graphics.newFont():getWidth(player[1].resource[v]) + text_distance
 	end
 end
