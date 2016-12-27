@@ -77,22 +77,34 @@ function board.load()
 	tile_height = img["brick"]:getHeight()
 end
 
-function board.draw()
-	for x = 1, #board.grid do
-		for y = 1, #board.grid[x] do
-			if board.grid[x][y].tile ~= nil then
-				local xpos = (x-1) * tile_width
-				local ypos = (y-1) * tile_height
+function board.draw(x, y)
+	if x == nil then x = 0 end
+	if y == nil then y = 0 end
 
-				if(y % 2 == 0) then
+	for xi = 1, #board.grid do
+		for yi = 1, #board.grid[xi] do
+			if board.grid[xi][yi].tile ~= nil then
+				local xpos = (xi-1) * tile_width
+				local ypos = (yi-1) * tile_height
+
+				if(yi % 2 == 0) then
 					xpos = xpos + tile_width/2
 				end
-				if y > 1 then
-					ypos = ypos - (tile_height/4*(y-1))
+				if yi > 1 then
+					ypos = ypos - (tile_height/4*(yi-1))
 				end
 
-				love.graphics.draw(img[board.grid[x][y].tile], xpos, ypos)
+				xpos = xpos + x
+				ypos = ypos + y
+
+				love.graphics.draw(img[board.grid[xi][yi].tile], xpos, ypos)
 			end
 		end
+	end
+	if debug then
+		love.graphics.setColor(255,0,0)
+		-- height is -1 because we 4 times subtract a quarter (see above
+		love.graphics.rectangle("line", x, y, tile_width * #board.grid[3], tile_height * (#board.grid - 1))
+		love.graphics.setColor(255,255,255)
 	end
 end

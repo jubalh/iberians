@@ -11,7 +11,7 @@ function love.update(dt)
 end
 
 function love.draw()
-	board.draw()
+	board.draw(50)
 end
 
 function love.keypressed(key)
