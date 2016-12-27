@@ -23,7 +23,7 @@ end
 
 function love.draw()
 	love.graphics.setBackgroundColor(51, 102, 204)
-	board.draw(174, 30)
+	board.draw(162, 30)
 	board.drawBar()
 end
 
