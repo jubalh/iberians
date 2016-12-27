@@ -1,7 +1,8 @@
 board = {}
 board.grid = {}
 
-local img = {}
+local tile_img = {}
+local icon_img = {}
 
 local function setTileByNr(cell, nr)
 	if nr == 1 then
@@ -64,17 +65,23 @@ end
 
 function board.load()
 	-- resources
-	img["brick"] = love.graphics.newImage("assets/images/brick.png")
-	img["iron"] = love.graphics.newImage("assets/images/iron.png")
-	img["wheat"] = love.graphics.newImage("assets/images/wheat.png")
-	img["wood"] = love.graphics.newImage("assets/images/wood.png")
-	img["wool"] = love.graphics.newImage("assets/images/wool.png")
+	tile_img["brick"] = love.graphics.newImage("assets/images/tiles/brick.png")
+	tile_img["iron"] = love.graphics.newImage("assets/images/tiles/iron.png")
+	tile_img["wheat"] = love.graphics.newImage("assets/images/tiles/wheat.png")
+	tile_img["wood"] = love.graphics.newImage("assets/images/tiles/wood.png")
+	tile_img["wool"] = love.graphics.newImage("assets/images/tiles/wool.png")
 	-- empty
-	img["desert"] = love.graphics.newImage("assets/images/desert.png")
-	img["water"] = love.graphics.newImage("assets/images/water.png")
+	tile_img["desert"] = love.graphics.newImage("assets/images/tiles/desert.png")
+	tile_img["water"] = love.graphics.newImage("assets/images/tiles/water.png")
 
-	tile_width = img["brick"]:getWidth()
-	tile_height = img["brick"]:getHeight()
+	tile_width = tile_img["brick"]:getWidth()
+	tile_height = tile_img["brick"]:getHeight()
+
+	icon_img["brick"] = love.graphics.newImage("assets/images/icons/brick.png")
+	icon_img["iron"] = love.graphics.newImage("assets/images/icons/iron.png")
+	icon_img["wheat"] = love.graphics.newImage("assets/images/icons/wheat.png")
+	icon_img["wood"] = love.graphics.newImage("assets/images/icons/wood.png")
+	icon_img["wool"] = love.graphics.newImage("assets/images/icons/wool.png")
 end
 
 function board.draw(x, y)
@@ -97,7 +104,7 @@ function board.draw(x, y)
 				xpos = xpos + x
 				ypos = ypos + y
 
-				love.graphics.draw(img[board.grid[xi][yi].tile], xpos, ypos)
+				love.graphics.draw(tile_img[board.grid[xi][yi].tile], xpos, ypos)
 			end
 		end
 	end
@@ -107,4 +114,37 @@ function board.draw(x, y)
 		love.graphics.rectangle("line", x, y, tile_width * #board.grid[3], tile_height * (#board.grid - 1))
 		love.graphics.setColor(255,255,255)
 	end
+end
+
+function board.drawBar()
+	-- background bar
+	local x = 100
+	local y = love.graphics.getHeight() - 40
+	local width = love.graphics.getWidth() - 200
+	local height = 35
+
+	--love.graphics.setColor(82, 50, 23)
+	love.graphics.setColor(117, 32, 4)
+	love.graphics.rectangle("fill", x, y, width, height)
+	love.graphics.setColor(255,255,255)
+
+	local icon_x = x + 80
+	local icon_y = y - 10
+	local icon_distance = 50
+	love.graphics.draw(icon_img["wool"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["wool"]:getWidth() + icon_distance
+	love.graphics.draw(icon_img["brick"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["brick"]:getWidth() + icon_distance
+	love.graphics.draw(icon_img["iron"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["iron"]:getWidth() + icon_distance
+	love.graphics.draw(icon_img["wheat"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["wheat"]:getWidth() + icon_distance
+	love.graphics.draw(icon_img["wood"], icon_x, icon_y)
+	icon_x = icon_x + icon_img["wood"]:getWidth() + icon_distance
+	--[[
+	for i, v in ipairs(icon_img) do
+		love.graphics.draw(v, icon_x , y + 5)
+		icon_x = icon_x + v:getWidth() + 10
+	end
+	--]]
 end
