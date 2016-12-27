@@ -53,6 +53,15 @@ function intro.draw()
 	item_text["new"] = "New Game"
 	item_text["exit"] = "Exit"
 
+	-- find the longest string so we can make all boxes
+	-- around the text the same size
+	local longest = ""
+	for _, v in ipairs(items_list) do
+		if item_text[v]:len() > longest:len() then
+			longest = item_text[v]
+		end
+	end
+
 	love.graphics.setFont(std_font)
 
 	-- go through all items
@@ -61,11 +70,10 @@ function intro.draw()
 
 		-- draw menu around it and add to the menu structure
 		y = y + addMenu(startmenu, v, 
-					(love.graphics.getWidth() - std_font:getWidth(item_text[v])) / 2 - menu_padding,
+					(love.graphics.getWidth() - std_font:getWidth(longest)) / 2 - menu_padding,
 					y - menu_padding,
-					std_font:getWidth(item_text[v]) + 2*menu_padding,
+					std_font:getWidth(longest) + 2*menu_padding,
 					std_font:getHeight() + 2*menu_padding)
-
 		y = y + menu_space
 	end
 
