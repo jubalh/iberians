@@ -76,12 +76,15 @@ function board.load()
 	-- all tiles have the same size
 	tile_width = tile_img["brick"]:getWidth()
 	tile_height = tile_img["brick"]:getHeight()
+
+	res_val_font = love.graphics.newFont(14)
 end
 
 function board.draw(x, y)
 	if x == nil then x = 0 end
 	if y == nil then y = 0 end
 
+	local res_i = 1
 	for xi = 1, #board.grid do
 		for yi = 1, #board.grid[xi] do
 			if board.grid[xi][yi].tile ~= nil then
@@ -98,10 +101,24 @@ function board.draw(x, y)
 				xpos = xpos + x
 				ypos = ypos + y
 
+				-- draw tile
 				love.graphics.draw(tile_img[board.grid[xi][yi].tile], xpos, ypos)
+
+				-- draw value for tile
+				if show_res_val and board.grid[xi][yi].tile ~= "desert" then
+					local radius = 15
+					love.graphics.setFont(res_val_font)
+					love.graphics.setColor(52,52,52)
+					love.graphics.circle("fill", xpos + tile_width/2, ypos + tile_height - 30 - radius/2, radius)
+					love.graphics.setColor(255,255,255)
+					love.graphics.print(resource_value_pool[res_i], xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
+					res_i = res_i + 1
+					love.graphics.setColor(255,255,255)
+				end
 			end
 		end
 	end
+
 	if debug then
 		love.graphics.setColor(255,0,0)
 		-- height is -1 because we 4 times subtract a quarter (see above

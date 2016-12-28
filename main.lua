@@ -2,12 +2,31 @@ require("board")
 require("intro")
 require("legend")
 
+--
+-- Debug variables
+--
 debug = false
+show_res_val = true
+--
+--
+
 game = {}
 game.state = "intro"
 player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
+
+resource_value_pool = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 }
+
+local function shuffleTable(t)
+	local iter = #t
+	local j
+
+	for i = iter, 2, -1 do
+		j = love.math.random(i)
+		t[i], t[j] = t[j], t[i]
+	end
+end
 
 function newGame()
 	-- initialize players
@@ -23,6 +42,7 @@ function newGame()
 	end
 
 	board.grid = board.createBoard()
+	shuffleTable(resource_value_pool)
 end
 
 function love.load()
