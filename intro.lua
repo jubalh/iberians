@@ -1,10 +1,10 @@
 intro = {}
 
 local sun_img
-local heading_font
+heading_font = ""
 
 startmenu = {}
-local items_list = { "new", "exit" }
+local items_list = { "new", "legend", "exit" }
 local startmenuClicked = {}
 
 function intro.load()
@@ -52,6 +52,7 @@ function intro.draw()
 
 	-- define the text for all menu items according to items_list
 	item_text["new"] = "New Game"
+	item_text["legend"] = "Legend"
 	item_text["exit"] = "Exit"
 
 	-- find the longest string so we can make all boxes
@@ -88,7 +89,9 @@ function intro.mousepressed(x, y, button)
 		for _, v in ipairs(items_list) do
 			-- see if it is inside the dimension of this item
 			if x >= startmenu[v].x and x <= (startmenu[v].x + startmenu[v].w) and y >= startmenu[v].y and y <= (startmenu[v].y + startmenu[v].h) then
-				startmenuClicked[v]()
+				if startmenuClicked[v] ~= nil then
+					startmenuClicked[v]()
+				end
 			end
 		end
 	end
@@ -101,6 +104,10 @@ end
 startmenuClicked["new"] = function()
 	newGame()
 	game.state = "game"
+end
+
+startmenuClicked["legend"] = function()
+	game.state = "legend"
 end
 
 startmenuClicked["exit"] = function()

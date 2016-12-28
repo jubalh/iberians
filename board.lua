@@ -2,7 +2,7 @@ board = {}
 board.grid = {}
 
 local tile_img = {}
-local icon_img = {}
+icon_img = {}
 
 local function setTileByNr(cell, nr)
 	if nr == 1 then

@@ -1,5 +1,6 @@
 require("board")
 require("intro")
+require("legend")
 
 debug = false
 game = {}
@@ -40,6 +41,8 @@ function love.draw()
 		love.graphics.setBackgroundColor(51, 102, 204)
 		board.draw(162, 30)
 		board.drawBar()
+	elseif game.state == "legend" then
+		legend.draw()
 	end
 end
 
