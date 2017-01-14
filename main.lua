@@ -5,7 +5,7 @@ require("legend")
 --
 -- Debug variables
 --
-debug = false
+debug = true
 show_res_val = true
 --
 --
@@ -75,5 +75,11 @@ end
 function love.mousepressed(x, y, button)
 	if game.state == "intro" then
 		intro.mousepressed(x, y, button)
+	end
+end
+
+function love.mousemoved(x, y, dx, dy)
+	if game.state == "game" then
+		board.mousemoved(x, y, dx, dy)
 	end
 end
