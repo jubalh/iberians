@@ -2,7 +2,6 @@ board = {}
 board.grid = {}
 
 local tile_img = {}
-icon_img = {}
 
 line_store = {}
 mouse = {}
@@ -72,7 +71,6 @@ function board.load()
 	-- resources
 	for _, v in ipairs(resource_list) do
 		tile_img[v] = love.graphics.newImage("assets/images/tiles/"..v..".png")
-		icon_img[v] = love.graphics.newImage("assets/images/icons/"..v..".png")
 	end
 	-- other tiles
 	tile_img["desert"] = love.graphics.newImage("assets/images/tiles/desert.png")
@@ -81,9 +79,6 @@ function board.load()
 	-- all tiles have the same size
 	tile_width = tile_img["brick"]:getWidth()
 	tile_height = tile_img["brick"]:getHeight()
-
-	-- other icons
-	action_icon_img = love.graphics.newImage("assets/images/action-icon.png")
 
 	res_val_font = love.graphics.newFont(14)
 end
@@ -149,41 +144,7 @@ function board.draw(x, y)
 	end
 end
 
-function board.drawBar()
-	-- background bar
-	local x = 100
-	local y = love.graphics.getHeight() - 40
-	local width = love.graphics.getWidth() - 200
-	local height = 35
-
-	--love.graphics.setColor(82, 50, 23)
-	love.graphics.setColor(117, 32, 4)
-	love.graphics.rectangle("fill", x, y, width, height)
-	love.graphics.setColor(255,255,255)
-
-	-- where to draw the icon
-	local icon_x = x + 100
-	local icon_y = y - 10
-	local text_y = icon_y + 20
-	-- space after an icon (before text)
-	local icon_distance = 10
-	-- space after text
-	local text_distance = 50
-
-	-- going through resource list
-	for k, v in ipairs(resource_list) do
-		-- draw icon and calculate new x
-		love.graphics.draw(icon_img[v], icon_x, icon_y)
-		icon_x = icon_x + icon_img[v]:getWidth() + icon_distance
-		-- draw text (nr of resources) and calculate new x
-		love.graphics.print(player[1].resource[v], icon_x, text_y)
-		icon_x = icon_x + love.graphics.newFont():getWidth(player[1].resource[v]) + text_distance
-	end
-
-	love.graphics.draw(action_icon_img, 100, love.graphics.getHeight() - 50)
-end
-
-function board.mousemoved(x, y, dx, dy)
+function board.mousemoved_street(x, y, dx, dy)
 	mouse.x = x
 	mouse.y = y
 	-- find out on which tile the mouse is

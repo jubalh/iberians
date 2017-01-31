@@ -1,6 +1,7 @@
 require("board")
 require("intro")
 require("legend")
+require("panel")
 
 --
 -- Debug variables
@@ -12,6 +13,7 @@ show_res_val = true
 
 game = {}
 game.state = "intro"
+game.action = "none"
 player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
@@ -48,6 +50,7 @@ end
 function love.load()
 	intro.load()
 	board.load()
+	panel.load()
 	newGame()
 end
 
@@ -60,7 +63,7 @@ function love.draw()
 	elseif game.state == "game" then
 		love.graphics.setBackgroundColor(51, 102, 204)
 		board.draw(162, 30)
-		board.drawBar()
+		panel.drawBar()
 	elseif game.state == "legend" then
 		legend.draw()
 	end
@@ -80,6 +83,8 @@ end
 
 function love.mousemoved(x, y, dx, dy)
 	if game.state == "game" then
-		board.mousemoved(x, y, dx, dy)
+		if game.action == "street" then
+			board.mousemoved_street(x, y, dx, dy)
+		end
 	end
 end
