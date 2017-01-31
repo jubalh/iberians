@@ -5,7 +5,7 @@ require("legend")
 --
 -- Debug variables
 --
-debug = true
+debug = false
 show_res_val = true
 --
 --
