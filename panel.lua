@@ -2,6 +2,7 @@ require("board")
 
 panel = {}
 icon_img = {}
+local action_menu_btn = {}
 
 function panel.load()
 	-- resource icons
@@ -43,5 +44,19 @@ function panel.drawBar()
 		icon_x = icon_x + love.graphics.newFont():getWidth(player[1].resource[v]) + text_distance
 	end
 
-	love.graphics.draw(action_icon_img, 100, love.graphics.getHeight() - 50)
+	x = 110
+	y = love.graphics.getHeight() - 50
+	action_menu_btn["action"] = {}
+	action_menu_btn["action"].x = x
+	action_menu_btn["action"].y = y
+	action_menu_btn["action"].w = 50
+	action_menu_btn["action"].h = 50
+	love.graphics.draw(action_icon_img, x, y)
+end
+
+function panel.mousepressed(x, y, button)
+	if x >= action_menu_btn["action"].x and x <= (action_menu_btn["action"].x + action_menu_btn["action"].w)
+		and y >= action_menu_btn["action"].y and y <= (action_menu_btn["action"].y + action_menu_btn["action"].h) then
+			print("action menu button pressed")
+	end
 end

@@ -78,6 +78,8 @@ end
 function love.mousepressed(x, y, button)
 	if game.state == "intro" then
 		intro.mousepressed(x, y, button)
+	elseif game.state == "game" then
+		panel.mousepressed(x, y, button)
 	end
 end
 
