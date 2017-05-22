@@ -85,8 +85,6 @@ end
 
 function love.mousemoved(x, y, dx, dy)
 	if game.state == "game" then
-		if game.action == "street" then
-			board.mousemoved_street(x, y, dx, dy)
-		end
+		board.mousemoved_street(x, y, dx, dy)
 	end
 end

@@ -125,11 +125,9 @@ function board.draw(x, y)
 		end
 	end
 
-	if debug then
+	if game.action == "street" then
 		love.graphics.setColor(255,0,0)
-		love.graphics.print(mouse.x..", "..mouse.y, 10, 10)
-		-- show in which direction of a tile the cursor is
-		-- in this direction we will then want to build a street(etc)
+		-- draw street
 		for i, l  in ipairs(line_store) do
 			love.graphics.line(l.x, l.y, l.x2, l.y2)
 		end
@@ -138,6 +136,9 @@ function board.draw(x, y)
 
 	if debug then
 		love.graphics.setColor(255,0,0)
+		-- display mouse info
+		love.graphics.print(mouse.x..", "..mouse.y, 10, 10)
+		-- display rectangle around deck
 		-- height is -1 because we 4 times subtract a quarter (see above
 		love.graphics.rectangle("line", x, y, tile_width * #board.grid[3], tile_height * (#board.grid - 1))
 		love.graphics.setColor(255,255,255)
@@ -147,72 +148,76 @@ end
 function board.mousemoved_street(x, y, dx, dy)
 	mouse.x = x
 	mouse.y = y
-	-- find out on which tile the mouse is
-	for xi = 1, #board.grid do
-		for yi = 1, #board.grid[xi] do
-			-- if not empty
-			if board.grid[xi][yi].tile ~= nil then
 
-				if x >= board.grid[xi][yi].x and x < (board.grid[xi][yi].x + tile_width)
-					and y >= board.grid[xi][yi].y and y < (board.grid[xi][yi].y + tile_height) then
+	-- if we are in street building mode, calculate the area
+	if game.action == "street" then
+		-- find out on which tile the mouse is
+		for xi = 1, #board.grid do
+			for yi = 1, #board.grid[xi] do
+				-- if not empty
+				if board.grid[xi][yi].tile ~= nil then
 
-					local l = {}
+					if x >= board.grid[xi][yi].x and x < (board.grid[xi][yi].x + tile_width)
+						and y >= board.grid[xi][yi].y and y < (board.grid[xi][yi].y + tile_height) then
 
-					-- upper quarter (tip) of tile
-					if y < board.grid[xi][yi].y + tile_height/4 then
-						-- tip point is common
-						l.x = board.grid[xi][yi].x + tile_width/2
-						l.y = board.grid[xi][yi].y
+						local l = {}
 
-						-- left side of tip
-						if x < board.grid[xi][yi].x + tile_width/2 then
-							--print("left side tip")
-							l.x2 = board.grid[xi][yi].x
-							l.y2 = board.grid[xi][yi].y + tile_height/4
-						-- right side
+						-- upper quarter (tip) of tile
+						if y < board.grid[xi][yi].y + tile_height/4 then
+							-- tip point is common
+							l.x = board.grid[xi][yi].x + tile_width/2
+							l.y = board.grid[xi][yi].y
+
+							-- left side of tip
+							if x < board.grid[xi][yi].x + tile_width/2 then
+								--print("left side tip")
+								l.x2 = board.grid[xi][yi].x
+								l.y2 = board.grid[xi][yi].y + tile_height/4
+							-- right side
+							else
+								--print("right side tip")
+								l.x2 = board.grid[xi][yi].x + tile_width
+								l.y2 = board.grid[xi][yi].y + tile_height/4
+							end
+						-- lower quarter
+						elseif y > board.grid[xi][yi].y + tile_height*3/4 then
+
+							-- lowest point is common
+							l.x = board.grid[xi][yi].x + tile_width/2
+							l.y = board.grid[xi][yi].y + tile_height
+
+							if x < board.grid[xi][yi].x + tile_width/2 then
+								--print("left side lower")
+								l.x2 = board.grid[xi][yi].x
+								l.y2 = board.grid[xi][yi].y + tile_height*3/4
+							-- right side
+							else
+								--print("right side lower")
+								l.x2 = board.grid[xi][yi].x + tile_width
+								l.y2 = board.grid[xi][yi].y + tile_height*3/4
+							end
+						-- middle
 						else
-							--print("right side tip")
-							l.x2 = board.grid[xi][yi].x + tile_width
-							l.y2 = board.grid[xi][yi].y + tile_height/4
+							-- left side of tile
+							if  x < board.grid[xi][yi].x + tile_width/2 then
+								--print("left side tile")
+								l.y = board.grid[xi][yi].y + tile_height/4
+								l.x = board.grid[xi][yi].x
+								l.y2 = l.y + tile_height/2
+								l.x2 = l.x
+							-- right side of tile
+							else
+								--print("right side tile")
+								l.y = board.grid[xi][yi].y + tile_height/4
+								l.x = board.grid[xi][yi].x + tile_width
+								l.y2 = l.y + tile_height/2
+								l.x2 = l.x
+							end
 						end
-					-- lower quarter
-					elseif y > board.grid[xi][yi].y + tile_height*3/4 then
 
-						-- lowest point is common
-						l.x = board.grid[xi][yi].x + tile_width/2
-						l.y = board.grid[xi][yi].y + tile_height
-
-						if x < board.grid[xi][yi].x + tile_width/2 then
-							--print("left side lower")
-							l.x2 = board.grid[xi][yi].x
-							l.y2 = board.grid[xi][yi].y + tile_height*3/4
-						-- right side
-						else
-							--print("right side lower")
-							l.x2 = board.grid[xi][yi].x + tile_width
-							l.y2 = board.grid[xi][yi].y + tile_height*3/4
-						end
-				    -- middle
-					else
-						-- left side of tile
-						if  x < board.grid[xi][yi].x + tile_width/2 then
-							--print("left side tile")
-							l.y = board.grid[xi][yi].y + tile_height/4
-							l.x = board.grid[xi][yi].x
-							l.y2 = l.y + tile_height/2
-							l.x2 = l.x
-						-- right side of tile
-						else
-							--print("right side tile")
-							l.y = board.grid[xi][yi].y + tile_height/4
-							l.x = board.grid[xi][yi].x + tile_width
-							l.y2 = l.y + tile_height/2
-							l.x2 = l.x
-						end
+						table.remove(line_store, 1)
+						table.insert(line_store, l)
 					end
-
-					table.remove(line_store, 1)
-					table.insert(line_store, l)
 				end
 			end
 		end

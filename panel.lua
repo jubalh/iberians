@@ -58,5 +58,7 @@ function panel.mousepressed(x, y, button)
 	if x >= action_menu_btn["action"].x and x <= (action_menu_btn["action"].x + action_menu_btn["action"].w)
 		and y >= action_menu_btn["action"].y and y <= (action_menu_btn["action"].y + action_menu_btn["action"].h) then
 			print("action menu button pressed")
+			-- treat this as 'build street' button for now
+		    game.action = "street"
 	end
 end
