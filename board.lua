@@ -104,7 +104,6 @@ function board.draw(x, y)
 	if x == nil then x = 0 end
 	if y == nil then y = 0 end
 
-	local res_i = 1
 	for xi = 1, #board.grid do
 		for yi = 1, #board.grid[xi] do
 			if board.grid[xi][yi].tile ~= nil then
@@ -127,15 +126,14 @@ function board.draw(x, y)
 				board.grid[xi][yi].x = xpos
 				board.grid[xi][yi].y = ypos
 
-				-- draw value for tile
-				if show_res_val and board.grid[xi][yi].tile ~= "desert" and board.grid[xi][yi].bandit ~= "true" then
+				-- draw resource value for tile
+				if show_res_val and board.grid[xi][yi].resourceValue ~= nil and board.grid[xi][yi].bandit ~= "true" then
 					local radius = 15
 					love.graphics.setFont(res_val_font)
 					love.graphics.setColor(52,52,52)
 					love.graphics.circle("fill", xpos + tile_width/2, ypos + tile_height - 30 - radius/2, radius)
 					love.graphics.setColor(255,255,255)
-					love.graphics.print(resource_value_pool[res_i], xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
-					res_i = res_i + 1
+					love.graphics.print(board.grid[xi][yi].resourceValue, xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
 					love.graphics.setColor(255,255,255)
 				end
 

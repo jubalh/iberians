@@ -55,6 +55,16 @@ function newGame()
 
 	board.grid = board.createNewBoard()
 	shuffleTable(resource_value_pool)
+
+	local res_i = 1
+	for xi = 1, #board.grid do
+		for yi = 1, #board.grid[xi] do
+			if board.grid[xi][yi].tile ~= nil and board.grid[xi][yi].tile ~= "desert" then
+				board.grid[xi][yi].resourceValue = resource_value_pool[res_i]
+				res_i = res_i + 1
+			end
+		end
+	end
 end
 
 function love.load()
