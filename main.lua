@@ -31,18 +31,27 @@ local function shuffleTable(t)
 	end
 end
 
-function newGame()
-	-- initialize players
+local function initPlayers()
 	for i = 1, 4 do
 		player[i] = {}
 		player[i].name = "Player"..i
 		player[i].resource = {}
 
-		-- initialize players resources
 		for k, v in ipairs(resource_list) do
+			-- initialize players resources
 			player[i].resource[v] = 100
+			-- max nr of buildings to build
+			-- decrease whenever one gets built
+			player[i].available = {}
+			player[i].available.settlements = 5
+			player[i].available.towns = 5
+			player[i].available.roads = 15
 		end
 	end
+end
+
+function newGame()
+	initPlayers()
 
 	board.grid = board.createNewBoard()
 	shuffleTable(resource_value_pool)
