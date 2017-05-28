@@ -76,6 +76,8 @@ function board.load()
 	tile_img["desert"] = love.graphics.newImage("assets/images/tiles/desert.png")
 	tile_img["water"] = love.graphics.newImage("assets/images/tiles/water.png")
 
+	bandit_img = love.graphics.newImage("assets/images/bandit.png")
+
 	-- all tiles have the same size
 	tile_width = tile_img["brick"]:getWidth()
 	tile_height = tile_img["brick"]:getHeight()
@@ -120,6 +122,11 @@ function board.draw(x, y)
 					love.graphics.print(resource_value_pool[res_i], xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
 					res_i = res_i + 1
 					love.graphics.setColor(255,255,255)
+				end
+
+				-- TODO: only temporary
+				if board.grid[xi][yi].tile == "desert" then
+					love.graphics.draw(bandit_img, xpos + tile_width / 2, ypos + tile_height / 2)
 				end
 			end
 		end
