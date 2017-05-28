@@ -24,7 +24,7 @@ local function setTileByNr(cell, nr)
 	end
 end
 
-function board.createBoard()
+local function createShuffledBoard()
 	-- create 2d board array
 	local grid = {}
 	for x = 1, 5 do
@@ -64,6 +64,21 @@ function board.createBoard()
 		i = i + 1
 	end
 
+	return grid
+end
+
+function board.createNewBoard()
+	grid = createShuffledBoard()
+
+	-- position bandit on desert
+	for xi = 1, #grid do
+		for yi = 1, #grid[xi] do
+			if grid[xi][yi].tile == "desert" then
+				-- print(xi .. " ".. yi)
+				grid[xi][yi].bandit = "true"
+			end
+		end
+	end
 	return grid
 end
 
@@ -113,7 +128,7 @@ function board.draw(x, y)
 				board.grid[xi][yi].y = ypos
 
 				-- draw value for tile
-				if show_res_val and board.grid[xi][yi].tile ~= "desert" then
+				if show_res_val and board.grid[xi][yi].tile ~= "desert" and board.grid[xi][yi].bandit ~= "true" then
 					local radius = 15
 					love.graphics.setFont(res_val_font)
 					love.graphics.setColor(52,52,52)
@@ -124,8 +139,8 @@ function board.draw(x, y)
 					love.graphics.setColor(255,255,255)
 				end
 
-				-- TODO: only temporary
-				if board.grid[xi][yi].tile == "desert" then
+				-- if bandit sits on field, draw it
+				if board.grid[xi][yi].bandit == "true" then
 					love.graphics.draw(bandit_img, xpos + tile_width / 2, ypos + tile_height / 2)
 				end
 			end

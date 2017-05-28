@@ -44,7 +44,7 @@ function newGame()
 		end
 	end
 
-	board.grid = board.createBoard()
+	board.grid = board.createNewBoard()
 	shuffleTable(resource_value_pool)
 end
 
