@@ -19,7 +19,7 @@ player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
 
-resource_value_pool = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 }
+local resource_value_pool = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 }
 
 local function shuffleTable(t)
 	local iter = #t
@@ -50,21 +50,24 @@ local function initPlayers()
 	end
 end
 
+local function distributeResourceValues(grid, pool)
+	local res_i = 1
+	for xi = 1, #grid do
+		for yi = 1, #grid[xi] do
+			if grid[xi][yi].tile ~= nil and grid[xi][yi].tile ~= "desert" then
+				grid[xi][yi].resourceValue = pool[res_i]
+				res_i = res_i + 1
+			end
+		end
+	end
+end
+
 function newGame()
 	initPlayers()
 
 	board.grid = board.createNewBoard()
 	shuffleTable(resource_value_pool)
-
-	local res_i = 1
-	for xi = 1, #board.grid do
-		for yi = 1, #board.grid[xi] do
-			if board.grid[xi][yi].tile ~= nil and board.grid[xi][yi].tile ~= "desert" then
-				board.grid[xi][yi].resourceValue = resource_value_pool[res_i]
-				res_i = res_i + 1
-			end
-		end
-	end
+	distributeResourceValues(board.grid, resource_value_pool)
 end
 
 function love.load()
