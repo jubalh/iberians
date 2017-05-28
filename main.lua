@@ -19,63 +19,11 @@ player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }
 
-local resource_value_pool = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 }
-
-local function shuffleTable(t)
-	local iter = #t
-	local j
-
-	for i = iter, 2, -1 do
-		j = love.math.random(i)
-		t[i], t[j] = t[j], t[i]
-	end
-end
-
-local function initPlayers()
-	for i = 1, 4 do
-		player[i] = {}
-		player[i].name = "Player"..i
-		player[i].resource = {}
-
-		for k, v in ipairs(resource_list) do
-			-- initialize players resources
-			player[i].resource[v] = 100
-			-- max nr of buildings to build
-			-- decrease whenever one gets built
-			player[i].available = {}
-			player[i].available.settlements = 5
-			player[i].available.towns = 5
-			player[i].available.roads = 15
-		end
-	end
-end
-
-local function distributeResourceValues(grid, pool)
-	local res_i = 1
-	for xi = 1, #grid do
-		for yi = 1, #grid[xi] do
-			if grid[xi][yi].tile ~= nil and grid[xi][yi].tile ~= "desert" then
-				grid[xi][yi].resourceValue = pool[res_i]
-				res_i = res_i + 1
-			end
-		end
-	end
-end
-
-function newGame()
-	initPlayers()
-
-	board.grid = board.createNewBoard()
-	shuffleTable(resource_value_pool)
-	distributeResourceValues(board.grid, resource_value_pool)
-end
-
 function love.load()
 	intro.load()
 	board.load()
 	panel.load()
 	playerspanel.load()
-	newGame()
 end
 
 function love.update(dt)

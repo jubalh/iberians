@@ -1,3 +1,5 @@
+require("setup")
+
 intro = {}
 
 local sun_img
@@ -102,7 +104,7 @@ end
 --
 
 startmenuClicked["new"] = function()
-	newGame()
+	board.grid = setup.newGame(player)
 	game.state = "game"
 end
 
