@@ -2,6 +2,7 @@ require("board")
 require("intro")
 require("legend")
 require("panel")
+require("playerspanel")
 
 --
 -- Debug variables
@@ -51,6 +52,7 @@ function love.load()
 	intro.load()
 	board.load()
 	panel.load()
+	playerspanel.load()
 	newGame()
 end
 
@@ -64,6 +66,7 @@ function love.draw()
 		love.graphics.setBackgroundColor(51, 102, 204)
 		board.draw(162, 30)
 		panel.drawBar()
+		playerspanel.draw()
 	elseif game.state == "legend" then
 		legend.draw()
 	end
