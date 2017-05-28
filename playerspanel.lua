@@ -8,11 +8,15 @@ local font_height = 0
 local totheleft = 0
 
 local function drawPlayerPanel(player, x, y)
-	love.graphics.print(player.name, x, y)
-	y = y + font_height
-	for k, v in ipairs(resource_list) do
-		love.graphics.print(v .. " " .. player.resource[v], x, y)
+	-- in case we have less than 4 players
+	-- player can be nil
+	if player ~= nil then
+		love.graphics.print(player.name, x, y)
 		y = y + font_height
+		for k, v in ipairs(resource_list) do
+			love.graphics.print(v .. " " .. player.resource[v], x, y)
+			y = y + font_height
+		end
 	end
 end
 
