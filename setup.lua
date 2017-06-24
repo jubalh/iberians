@@ -35,21 +35,22 @@ local function initPlayers(player)
 	end
 
 	-- set colors
-	player[1].color.r = 232
-	player[1].color.g = 50
-	player[1].color.b = 39
+	player[1].color.r = 135
+	player[1].color.g = 31
+	player[1].color.b = 42
 
 	player[2].color.r = 0
 	player[2].color.g = 161
 	player[2].color.b = 83
 
-	player[3].color.r = 0
-	player[3].color.g = 114
-	player[3].color.b = 177
+	player[3].color.r = 204
+	player[3].color.g = 153
+	player[3].color.b = 51
 
-	player[4].color.r = 244
-	player[4].color.g = 153
-	player[4].color.b = 39
+
+	player[4].color.r = 112
+	player[4].color.g = 31
+	player[4].color.b = 130
 end
 
 local function distributeResourceValues(grid, pool)
