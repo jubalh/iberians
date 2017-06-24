@@ -46,11 +46,11 @@ function panel.drawBar()
 	end
 
 	-- draw action buttons
-	love.graphics.setColor(0, 0, 0)
+	love.graphics.setColor(66, 45, 26)
 	love.graphics.draw(action_icon_img, action_menu_btn["build"].x, action_menu_btn["build"].y)
-	love.graphics.setColor(255, 0, 0)
+	love.graphics.setColor(26, 47, 66)
 	love.graphics.draw(action_icon_img, action_menu_btn["trade"].x, action_menu_btn["trade"].y)
-	love.graphics.setColor(0, 255, 0)
+	love.graphics.setColor(26, 33, 66)
 	love.graphics.draw(action_icon_img, action_menu_btn["develcards"].x, action_menu_btn["develcards"].y)
 	love.graphics.setColor(255, 255, 255)
 
