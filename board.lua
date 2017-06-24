@@ -60,7 +60,7 @@ function board.draw(x, y)
 					love.graphics.circle("fill", xpos + tile_width/2, ypos + tile_height - 30 - radius/2, radius)
 
 					love.graphics.setColor(255,255,255)
-					love.graphics.print(board.grid[xi][yi].resourceValue, xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
+					love.graphics.print(board.grid[xi][yi].resourceValue, xpos + tile_width/2 - res_val_font:getWidth(board.grid[xi][yi].resourceValue)/2, ypos + tile_height - 30 - 15)
 					love.graphics.setColor(255,255,255)
 				end
 
