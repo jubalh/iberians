@@ -56,8 +56,9 @@ function board.draw(x, y)
 				if show_res_val and board.grid[xi][yi].resourceValue ~= nil and board.grid[xi][yi].bandit ~= "true" then
 					local radius = 15
 					love.graphics.setFont(res_val_font)
-					love.graphics.setColor(52,52,52)
+					love.graphics.setColor(26, 47, 66)
 					love.graphics.circle("fill", xpos + tile_width/2, ypos + tile_height - 30 - radius/2, radius)
+
 					love.graphics.setColor(255,255,255)
 					love.graphics.print(board.grid[xi][yi].resourceValue, xpos + tile_width/2 - res_val_font:getWidth("8")/2, ypos + tile_height - 30 - 15)
 					love.graphics.setColor(255,255,255)
