@@ -34,19 +34,14 @@ function playerspanel.load()
 	local std_font = love.graphics.newFont(12)
 	font_height = std_font:getHeight()
 	space_from_right = std_font:getWidth("wheat 100") + 20
-	-- 1 line for text of player height
-	-- 25px = size of resource image / 2
-	-- 5 resources
-	-- 35 = panel height
-	space_from_bottom = std_font:getHeight("player 4") + 25*5 + 35 + 50
 end
 
 function playerspanel.draw()
 	love.graphics.setColor(117, 32, 4)
 
-	drawPlayerPanel(player[2], 20, 10)
-	drawPlayerPanel(player[3], love.graphics.getWidth() - space_from_right, 10)
-	drawPlayerPanel(player[4], love.graphics.getWidth() - space_from_right, love.graphics.getHeight() - space_from_bottom)
+	drawPlayerPanel(player[2], love.graphics.getWidth() - space_from_right, 20)
+	drawPlayerPanel(player[3], love.graphics.getWidth() - space_from_right, 210)
+	drawPlayerPanel(player[4], love.graphics.getWidth() - space_from_right, 400)
 	-- reset color
 	love.graphics.setColor(255, 255, 255)
 end
