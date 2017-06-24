@@ -72,7 +72,8 @@ function board.draw(x, y)
 	end
 
 	if game.action == "street" then
-		love.graphics.setColor(255,0,0)
+		-- draw street in the color of the player
+		love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
 		-- draw street
 		for i, l  in ipairs(line_store) do
 			love.graphics.line(l.x, l.y, l.x2, l.y2)

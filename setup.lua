@@ -29,8 +29,27 @@ local function initPlayers(player)
 			player[i].available.settlements = 5
 			player[i].available.towns = 5
 			player[i].available.roads = 15
+
+			player[i].color = {}
 		end
 	end
+
+	-- set colors
+	player[1].color.r = 232
+	player[1].color.g = 50
+	player[1].color.b = 39
+
+	player[2].color.r = 0
+	player[2].color.g = 161
+	player[2].color.b = 83
+
+	player[3].color.r = 0
+	player[3].color.g = 114
+	player[3].color.b = 177
+
+	player[4].color.r = 244
+	player[4].color.g = 153
+	player[4].color.b = 39
 end
 
 local function distributeResourceValues(grid, pool)

@@ -15,6 +15,7 @@ show_res_val = true
 game = {}
 game.state = "intro"
 game.action = "none"
+game.activePlayer = 1
 player = {}
 
 resource_list = { "brick", "iron", "wheat", "wood", "wool" }

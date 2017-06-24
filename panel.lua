@@ -21,8 +21,8 @@ function panel.drawBar()
 	local width = love.graphics.getWidth() - 200
 	local height = 35
 
-	--love.graphics.setColor(82, 50, 23)
-	love.graphics.setColor(117, 32, 4)
+	-- panel in the color of the main player
+	love.graphics.setColor(player[1].color.r, player[1].color.g, player[1].color.b) --love.graphics.setColor(117, 32, 4)
 	love.graphics.rectangle("fill", x, y, width, height)
 	love.graphics.setColor(255,255,255)
 
