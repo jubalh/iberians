@@ -14,14 +14,18 @@ local function drawPlayerPanel(player, x, y)
 
 		-- draw panel, in players color, around the text
 		love.graphics.setColor(player.color.r, player.color.g, player.color.b)
-		love.graphics.rectangle("fill", x - 10, y - 5, 90, 100)
+		love.graphics.rectangle("fill", x - 10, y - 5, 90, 180)
 		love.graphics.setColor(255,255,255)
 
 		love.graphics.print(player.name, x, y)
-		y = y + font_height
+		y = y + font_height + 10 -- spacing
+
 		for k, v in ipairs(resource_list) do
-			love.graphics.print(v .. " " .. player.resource[v], x, y)
-			y = y + font_height
+			-- draw resource icon
+			love.graphics.draw(icon_img[v], x, y, 0, 0.5, 0.5)
+			-- print amount
+			love.graphics.print(player.resource[v], x + 50, y)
+			y = y + icon_img[v]:getHeight()/2 + 5
 		end
 	end
 end
@@ -30,9 +34,11 @@ function playerspanel.load()
 	local std_font = love.graphics.newFont(12)
 	font_height = std_font:getHeight()
 	space_from_right = std_font:getWidth("wheat 100") + 20
-	-- 6 lines = 5 resources + playername
+	-- 1 line for text of player height
+	-- 25px = size of resource image / 2
+	-- 5 resources
 	-- 35 = panel height
-	space_from_bottom = std_font:getHeight("wheat 100") * 6 + 35 + 50
+	space_from_bottom = std_font:getHeight("player 4") + 25*5 + 35 + 50
 end
 
 function playerspanel.draw()
