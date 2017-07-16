@@ -2,7 +2,9 @@ require("board")
 
 panel = {}
 icon_img = {}
+-- holding the action buttons
 local action_menu_btn = {}
+-- index to the action buttons
 local action_btns = {"build", "trade", "develcards"}
 
 function panel.load()
@@ -54,6 +56,11 @@ function panel.drawBar()
 	love.graphics.draw(action_icon_img, action_menu_btn["develcards"].x, action_menu_btn["develcards"].y)
 	love.graphics.setColor(255, 255, 255)
 
+	-- draw tooltip for action button if mouse hovers
+	if panel.tooltip ~= nil then
+		love.graphics.print(panel.tooltip, action_menu_btn[panel.tooltip].x - 10, action_menu_btn[panel.tooltip].y - 20)
+	end
+
 	-- some distance between action buttons and resource icons
 	icon_x = icon_x + 20
 
@@ -74,5 +81,18 @@ function panel.mousepressed(x, y, button)
 			print("build action menu button pressed")
 			-- treat this as 'build street' button for now
 		    game.action = "street"
+	end
+end
+
+function panel.mousemoved(x, y, dx, dy)
+	-- if mouse is over action button show tooltip
+	for k, v in ipairs(action_btns) do
+		if x >= action_menu_btn[v].x and x <= (action_menu_btn[v].x + action_menu_btn[v].w)
+			and y >= action_menu_btn[v].y and y <= (action_menu_btn[v].y + action_menu_btn[v].h) then
+			panel.tooltip = v
+			break
+		else
+			panel.tooltip = nil
+		end
 	end
 end
