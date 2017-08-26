@@ -7,7 +7,7 @@ Iberians is a clone of the board game The Settlers of Catan.
 
 Written in Lua with Love.
 
-![screenshot](http://imgur.com/0SSDp2x)
+![screenshot](http://i.imgur.com/0SSDp2x.png)
 
 # Dependencies
 * [Lua](https://www.lua.org/) 5.3
