@@ -4,6 +4,9 @@ board.grid = {}
 local tile_img = {}
 
 line_store = {}
+-- circle for settlement
+circle = {}
+circle.r = 20
 mouse = {}
 mouse.x = 0
 mouse.y = 0
@@ -80,6 +83,36 @@ function board.draw(x, y)
 			love.graphics.line(l.x, l.y, l.x2, l.y2)
 		end
 		love.graphics.setColor(255,255,255)
+	end
+
+	if game.action == "settlement" then
+		-- TODO: only show settlement where mouse is
+		-- for now we show all settlements
+		for xi = 1, #board.grid do
+			for yi = 1, #board.grid[xi] do
+				-- if not empty
+				if board.grid[xi][yi].tile ~= nil then
+			love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
+			-- top
+			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width/2, board.grid[xi][yi].y, circle.r)
+			-- bottom
+			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width/2, board.grid[xi][yi].y + tile_height, circle.r)
+
+			love.graphics.circle("fill", board.grid[xi][yi].x, board.grid[xi][yi].y + tile_height/4, circle.r)
+			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width, board.grid[xi][yi].y + tile_height/4, circle.r)
+			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width, board.grid[xi][yi].y + tile_height*3/4, circle.r)
+			love.graphics.circle("fill", board.grid[xi][yi].x, board.grid[xi][yi].y + tile_height*3/4, circle.r)
+			love.graphics.setColor(255,255,255)
+				end
+			end
+		end
+		--
+		--if circle.x ~= nil and circle.y ~= nil then
+			-- draw street in the color of the player
+		--	love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
+		--	love.graphics.circle("fill", circle.x - circle.r/2, circle.y - circle.r/2, circle.r)
+		--	love.graphics.setColor(255,255,255)
+		--end
 	end
 
 	if debug then
@@ -165,6 +198,35 @@ function board.mousemoved_street(x, y, dx, dy)
 
 						table.remove(line_store, 1)
 						table.insert(line_store, l)
+					end
+				end
+			end
+		end
+	end
+end
+
+function board.mousemoved_settlement(x, y, dx, dy)
+	if game.action == "settlement" then
+		-- find out on which tile the mouse is
+		for xi = 1, #board.grid do
+			for yi = 1, #board.grid[xi] do
+				-- if not empty
+				if board.grid[xi][yi].tile ~= nil then
+
+					if x >= board.grid[xi][yi].x and x < (board.grid[xi][yi].x + tile_width)
+						and y >= board.grid[xi][yi].y and y < (board.grid[xi][yi].y + tile_height) then
+						print("y: "..board.grid[xi][yi].y)
+						print("board: "..board.grid[xi][yi].y)
+						print("x: "..board.grid[xi][yi].x)
+						print("board: "..board.grid[xi][yi].x)
+						print()
+
+						if y <= board.grid[xi][yi].y and x <= board.grid[xi][yi].x + tile_width/2 then
+							print("yep")
+							circle.x = x
+							circle.y = y
+						end
+
 					end
 				end
 			end

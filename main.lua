@@ -60,6 +60,7 @@ end
 function love.mousemoved(x, y, dx, dy)
 	if game.state == "game" then
 		board.mousemoved_street(x, y, dx, dy)
+		board.mousemoved_settlement(x, y, dx, dy)
 		panel.mousemoved(x, y, dx, dy)
 	end
 end
