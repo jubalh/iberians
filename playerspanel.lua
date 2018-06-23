@@ -1,3 +1,5 @@
+-- vim: noexpandtab:ts=4:sts=4:sw=4
+
 -- playerspanel draws the information about how many resources the other
 -- players have and their names
 

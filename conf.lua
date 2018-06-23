@@ -1,3 +1,5 @@
+-- vim: noexpandtab:ts=4:sts=4:sw=4
+
 function love.conf(t)
 	scale = 1
 	t.version = "0.10.1"
