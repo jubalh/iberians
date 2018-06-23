@@ -6,6 +6,7 @@ board.grid = {}
 local tile_img = {}
 
 line_store = {}
+circle_settlement_store = {}
 -- circle for settlement
 circle = {}
 circle.r = 20
@@ -88,33 +89,13 @@ function board.draw(x, y)
 	end
 
 	if game.action == "settlement" then
-		-- TODO: only show settlement where mouse is
-		-- for now we show all settlements
-		for xi = 1, #board.grid do
-			for yi = 1, #board.grid[xi] do
-				-- if not empty
-				if board.grid[xi][yi].tile ~= nil then
-			love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
-			-- top
-			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width/2, board.grid[xi][yi].y, circle.r)
-			-- bottom
-			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width/2, board.grid[xi][yi].y + tile_height, circle.r)
-
-			love.graphics.circle("fill", board.grid[xi][yi].x, board.grid[xi][yi].y + tile_height/4, circle.r)
-			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width, board.grid[xi][yi].y + tile_height/4, circle.r)
-			love.graphics.circle("fill", board.grid[xi][yi].x + tile_width, board.grid[xi][yi].y + tile_height*3/4, circle.r)
-			love.graphics.circle("fill", board.grid[xi][yi].x, board.grid[xi][yi].y + tile_height*3/4, circle.r)
-			love.graphics.setColor(255,255,255)
-				end
-			end
+		-- draw settlement in the color of the player
+		love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
+		-- draw settlement
+		for i, p  in ipairs(circle_settlement_store) do
+			love.graphics.circle("fill", p.x, p.y, circle.r)
 		end
-		--
-		--if circle.x ~= nil and circle.y ~= nil then
-			-- draw street in the color of the player
-		--	love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
-		--	love.graphics.circle("fill", circle.x - circle.r/2, circle.y - circle.r/2, circle.r)
-		--	love.graphics.setColor(255,255,255)
-		--end
+		love.graphics.setColor(255,255,255)
 	end
 
 	if debug then
@@ -214,21 +195,55 @@ function board.mousemoved_settlement(x, y, dx, dy)
 			for yi = 1, #board.grid[xi] do
 				-- if not empty
 				if board.grid[xi][yi].tile ~= nil then
+					local p = {}
 
-					if x >= board.grid[xi][yi].x and x < (board.grid[xi][yi].x + tile_width)
-						and y >= board.grid[xi][yi].y and y < (board.grid[xi][yi].y + tile_height) then
-						print("y: "..board.grid[xi][yi].y)
-						print("board: "..board.grid[xi][yi].y)
-						print("x: "..board.grid[xi][yi].x)
-						print("board: "..board.grid[xi][yi].x)
-						print()
+					-- point 1 (left, upper)
+					if x <= (board.grid[xi][yi].x  + circle.r) and x >= (board.grid[xi][yi].x - circle.r)
+						and y <= (board.grid[xi][yi].y + tile_height/4 + circle.r) and y >= (board.grid[xi][yi].y + tile_height/4 - circle.r) then
 
-						if y <= board.grid[xi][yi].y and x <= board.grid[xi][yi].x + tile_width/2 then
-							print("yep")
-							circle.x = x
-							circle.y = y
-						end
+						p.x = board.grid[xi][yi].x
+						p.y = board.grid[xi][yi].y + tile_height/4
+					end
 
+					-- point 2 (middle, upper)
+					if x <= (board.grid[xi][yi].x + tile_width/2 + circle.r) and x >= (board.grid[xi][yi].x + tile_width/2 - circle.r) and y <= (board.grid[xi][yi].y + circle.r) and y >= (board.grid[xi][yi].y - circle.r) then
+
+						p.x = board.grid[xi][yi].x + tile_width/2
+						p.y = board.grid[xi][yi].y
+					end
+
+					-- point 3 (right, upper)
+					if x <= (board.grid[xi][yi].x + tile_width + circle.r) and x >= (board.grid[xi][yi].x + tile_width - circle.r) and y <= (board.grid[xi][yi].y + tile_height/4 + circle.r) and y >= (board.grid[xi][yi].y + tile_height/4 - circle.r) then
+
+						p.x = board.grid[xi][yi].x + tile_width
+						p.y = board.grid[xi][yi].y + tile_height/4
+					end
+
+					-- point 4 (lower, left)
+					if x <= (board.grid[xi][yi].x + circle.r) and x >= (board.grid[xi][yi].x - circle.r) and y <= (board.grid[xi][yi].y + tile_height*3/4 + circle.r) and y >= (board.grid[xi][yi].y + tile_height*3/4 - circle.r) then
+
+						p.x = board.grid[xi][yi].x
+						p.y = board.grid[xi][yi].y + tile_height*3/4
+					end
+
+					-- point 5 (lower, middle)
+					if x <= (board.grid[xi][yi].x + tile_width/2 + circle.r) and x >= (board.grid[xi][yi].x + tile_width/2 - circle.r) and y <= (board.grid[xi][yi].y + tile_height + circle.r) and y >= (board.grid[xi][yi].y + tile_height - circle.r) then
+
+						p.x = board.grid[xi][yi].x + tile_width/2
+						p.y = board.grid[xi][yi].y + tile_height
+					end
+
+					-- point 6 (lower, right)
+					if x <= (board.grid[xi][yi].x + tile_width + circle.r) and x >= (board.grid[xi][yi].x + tile_width - circle.r) and y <= (board.grid[xi][yi].y + tile_height*3/4 + circle.r) and y >= (board.grid[xi][yi].y + tile_height*3/4 - circle.r) then
+
+						p.x = board.grid[xi][yi].x + tile_width
+						p.y = board.grid[xi][yi].y + tile_height*3/4
+					end
+
+					-- if we hit a point, save it
+					if p.x ~= nil then
+						table.remove(circle_settlement_store, 1)
+						table.insert(circle_settlement_store, p)
 					end
 				end
 			end
