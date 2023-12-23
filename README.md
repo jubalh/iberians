@@ -11,7 +11,7 @@ Written in Lua with Love.
 
 # Dependencies
 * [Lua](https://www.lua.org/) 5.3
-* [LÖVE](https://love2d.org/) 0.10.1
+* [LÖVE](https://love2d.org/) 11.5
 
 # Installation
 

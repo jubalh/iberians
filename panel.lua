@@ -26,9 +26,9 @@ function panel.drawBar()
 	local height = 35
 
 	-- panel in the color of the main player
-	love.graphics.setColor(player[1].color.r, player[1].color.g, player[1].color.b) --love.graphics.setColor(117, 32, 4)
+	love.graphics.setColor(love.math.colorFromBytes(player[1].color.r, player[1].color.g, player[1].color.b)) --love.graphics.setColor(117, 32, 4)
 	love.graphics.rectangle("fill", x, y, width, height)
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 
 	-- where to draw the icon
 	local icon_x = x + 10
@@ -50,13 +50,13 @@ function panel.drawBar()
 	end
 
 	-- draw action buttons
-	love.graphics.setColor(66, 45, 26)
+	love.graphics.setColor(love.math.colorFromBytes(66, 45, 26))
 	love.graphics.draw(action_icon_img, action_menu_btn["build"].x, action_menu_btn["build"].y)
-	love.graphics.setColor(26, 47, 66)
+	love.graphics.setColor(love.math.colorFromBytes(26, 47, 66))
 	love.graphics.draw(action_icon_img, action_menu_btn["trade"].x, action_menu_btn["trade"].y)
-	love.graphics.setColor(26, 33, 66)
+	love.graphics.setColor(love.math.colorFromBytes(26, 33, 66))
 	love.graphics.draw(action_icon_img, action_menu_btn["develcards"].x, action_menu_btn["develcards"].y)
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(love.math.colorFromBytes(255, 255, 255))
 
 	-- draw tooltip for action button if mouse hovers
 	if panel.tooltip ~= nil then

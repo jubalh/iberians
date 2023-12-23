@@ -38,19 +38,19 @@ function intro.draw()
 	local menu_padding = 4
 	local menu_space = 15
 
-	love.graphics.setBackgroundColor(135, 31, 42)
+	love.graphics.setBackgroundColor(love.math.colorFromBytes(135, 31, 42))
 
 	-- draw iberians heading
-	love.graphics.setColor(255, 214, 0)
+	love.graphics.setColor(love.math.colorFromBytes(255, 214, 0))
 	love.graphics.setFont(heading_font)
 	love.graphics.print(txt_heading, (love.graphics.getWidth() - heading_font:getWidth(txt_heading)) / 2, y)
 
 	y = y + heading_font:getHeight()
 
 	-- draw sun image
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(love.math.colorFromBytes(255, 255, 255))
 	love.graphics.draw(sun_img, (love.graphics.getWidth() - sun_img:getWidth())/2, y)
-	love.graphics.setColor(255, 214, 0)
+	love.graphics.setColor(love.math.colorFromBytes(255, 214, 0))
 
 	y = y + sun_img:getHeight() + 30
 
@@ -83,7 +83,7 @@ function intro.draw()
 		y = y + menu_space
 	end
 
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(love.math.colorFromBytes(255, 255, 255))
 end
 
 function intro.mousepressed(x, y, button)

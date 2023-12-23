@@ -36,7 +36,7 @@ function love.draw()
 	if game.state == "intro" then
 		intro.draw()
 	elseif game.state == "game" then
-		love.graphics.setBackgroundColor(51, 102, 204)
+		love.graphics.setBackgroundColor(love.math.colorFromBytes(51, 102, 204))
 		board.draw(162, 30)
 		panel.drawBar()
 		playerspanel.draw()

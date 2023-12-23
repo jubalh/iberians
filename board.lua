@@ -62,12 +62,12 @@ function board.draw(x, y)
 				if show_res_val and board.grid[xi][yi].resourceValue ~= nil and board.grid[xi][yi].bandit ~= "true" then
 					local radius = 15
 					love.graphics.setFont(res_val_font)
-					love.graphics.setColor(26, 47, 66)
+					love.graphics.setColor(love.math.colorFromBytes(26, 47, 66))
 					love.graphics.circle("fill", xpos + tile_width/2, ypos + tile_height - 30 - radius/2, radius)
 
-					love.graphics.setColor(255,255,255)
+					love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 					love.graphics.print(board.grid[xi][yi].resourceValue, xpos + tile_width/2 - res_val_font:getWidth(board.grid[xi][yi].resourceValue)/2, ypos + tile_height - 30 - 15)
-					love.graphics.setColor(255,255,255)
+					love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 				end
 
 				-- if bandit sits on field, draw it
@@ -80,32 +80,32 @@ function board.draw(x, y)
 
 	if game.action == "street" then
 		-- draw street in the color of the player
-		love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
+		love.graphics.setColor(love.math.colorFromBytes(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b))
 		-- draw street
 		for i, l  in ipairs(line_store) do
 			love.graphics.line(l.x, l.y, l.x2, l.y2)
 		end
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 	end
 
 	if game.action == "settlement" then
 		-- draw settlement in the color of the player
-		love.graphics.setColor(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b)
+		love.graphics.setColor(love.math.colorFromBytes(player[game.activePlayer].color.r, player[game.activePlayer].color.g, player[game.activePlayer].color.b))
 		-- draw settlement
 		for i, p  in ipairs(circle_settlement_store) do
 			love.graphics.circle("fill", p.x, p.y, circle.r)
 		end
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 	end
 
 	if debug then
-		love.graphics.setColor(255,0,0)
+		love.graphics.setColor(love.math.colorFromBytes(255,0,0))
 		-- display mouse info
 		love.graphics.print(mouse.x..", "..mouse.y, 10, 10)
 		-- display rectangle around deck
 		-- height is -1 because we 4 times subtract a quarter (see above
 		love.graphics.rectangle("line", x, y, tile_width * #board.grid[3], tile_height * (#board.grid - 1))
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 	end
 end
 

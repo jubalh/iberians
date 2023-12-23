@@ -15,9 +15,9 @@ local function drawPlayerPanel(player, x, y)
 	if player ~= nil then
 
 		-- draw panel, in players color, around the text
-		love.graphics.setColor(player.color.r, player.color.g, player.color.b)
+		love.graphics.setColor(love.math.colorFromBytes(player.color.r, player.color.g, player.color.b))
 		love.graphics.rectangle("fill", x - 10, y - 5, 90, 180)
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(love.math.colorFromBytes(255,255,255))
 
 		love.graphics.print(player.name, x, y)
 		y = y + font_height + 10 -- spacing
@@ -39,12 +39,12 @@ function playerspanel.load()
 end
 
 function playerspanel.draw()
-	love.graphics.setColor(117, 32, 4)
+	love.graphics.setColor(love.math.colorFromBytes(117, 32, 4))
 
 	drawPlayerPanel(player[2], love.graphics.getWidth() - space_from_right, 20)
 	drawPlayerPanel(player[3], love.graphics.getWidth() - space_from_right, 210)
 	drawPlayerPanel(player[4], love.graphics.getWidth() - space_from_right, 400)
 	-- reset color
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(love.math.colorFromBytes(255, 255, 255))
 end
 
